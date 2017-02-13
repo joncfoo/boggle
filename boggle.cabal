@@ -1,0 +1,24 @@
+name:                boggle
+version:             0.1.0.0
+homepage:            https://gitlab.com/joncfoo/boggle
+license:             ISC
+license-file:        LICENSE
+author:              Jonathan Curran
+maintainer:          joncfoo@gmail.com
+copyright:           2017 Jonathan Curran
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+
+executable boggle
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , protolude
+                     , http-types
+                     , scotty
+                     , text
+                     , word-trie
+                     , vector
+  default-language:    Haskell2010
