@@ -5,7 +5,8 @@
 
 # Build
 
-`stack build`
+- `stack build`
+- get coffee/tea if this is the first time using stack
 
 # Run
 
