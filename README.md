@@ -10,4 +10,5 @@
 # Run
 
 `stack exec boggle`
+
 `curl http://localhost:5000/api/XIEAMLOEWBXASTU`
