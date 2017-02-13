@@ -11,4 +11,6 @@
 
 `stack exec boggle`
 
-`curl http://localhost:5000/api/XIEAMLOEWBXASTU`
+`curl http://localhost:5000/api/FXIEAMLOEWBXASTU`
+
+`curl http://localhost:5000/api/foobar`
