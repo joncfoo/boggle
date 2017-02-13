@@ -21,6 +21,8 @@ main = do
 
   scotty 5000 $ do
     get "/api/:board" $ do
+
+      -- create board out of letters
       board <- (mkBoard . Text.toUpper) <$> param "board"
 
       if length board /= 16
@@ -28,11 +30,13 @@ main = do
           status badRequest400
           text "Invalid board"
         else wordsInBoard dict board
-             & Text.unlines
-             & toSL
-             & text
+             & Text.unlines  -- concatenate list of words with newline
+             & toSL  -- convert to lazy text (framework requirement)
+             & text  -- return as text content type
 
 
+-- convert letters in text to a vector of text suitable for consumption as boggle board letters
+-- (mainly to hand "QU" requirement)
 mkBoard :: Text -> Vector Text
 mkBoard word =
   case Text.splitOn "QU" word of
