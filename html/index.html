@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<style id="jsbin-css">
+body {
+  margin: 4rem;
+  font-size: 2rem;
+  background: #fff;
+}
+.all {
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  width: 30rem;
+}
+input {
+  border: 0;
+  border-bottom: 1px solid #aaa;
+  padding: 0;
+  margin: 0;
+  font-size: 2rem;
+}
+.letters {
+  margin-top: 2rem;
+}
+.letters input {
+  width: 3rem;
+  text-align: center;
+  cursor: default;
+}
+</style>
+</head>
+<body>
+
+<input class="all" placeholder="enter  letters"/>
+<div class="letters">
+  <input/>
+  <input/>
+  <input/>
+  <input/><br>
+  <input/>
+  <input/>
+  <input/>
+  <input/><br>
+  <input/>
+  <input/>
+  <input/>
+  <input/><br>
+  <input/>
+  <input/>
+  <input/>
+  <input/>
+</div>
+<div class="output"><pre></pre></div>
+
+<script id="jsbin-javascript">
+'use strict';
+
+$('.letters input').attr('readonly', true);
+
+function boardLetters(text, target) {
+  var letters = text.split('').reduce(function (a, b) {
+    if (a[a.length - 1] == 'Q' && b == 'U') {
+      a = a.slice(0, a.length - 1);
+      a.push('QU');
+    } else {
+      a.push(b);
+    }
+    return a;
+  }, []);
+
+  if (letters.length > 16) {
+    letters = letters.slice(0, 16);
+    target.value = letters.join('');
+  }
+
+  return letters;
+}
+
+$('input.all').on('keyup', function (e) {
+
+  var letters = boardLetters(e.target.value.toUpperCase(), e.target);
+
+  for (var i = 0; i < 16; i++) {
+    $('.letters input:nth-of-type(' + (i + 1) + ')').val(letters[i] || '');
+  }
+
+  if (letters.length === 16) {
+    $.get('/api/' + letters.join('')).then(function (t) {
+      return $('.output pre').text(t);
+    }).fail(function (e) {
+      return $('.output pre').text(e);
+    });
+  }
+});
+</script>
+
+<!--
+<script id="jsbin-source-css" type="text/css">body {
+  margin: 4rem;
+  font-size: 2rem;
+  background: #fff;
+}
+.all {
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  width: 25rem;
+}
+input {
+  border: 0;
+  border-bottom: 1px solid #aaa;
+  padding: 0;
+  margin: 0;
+  font-size: 2rem;
+}
+.letters {
+  margin-top: 2rem;
+}
+.letters input {
+  width: 3rem;
+  text-align: center;
+  cursor: default;
+}
+</script>
+
+<script id="jsbin-source-javascript" type="text/javascript">$('.letters input').attr('readonly', true);
+
+function boardLetters(text, target) {
+  let letters = text.split('').reduce((a, b) => {
+    if (a[a.length - 1] == 'Q' && b == 'U') {
+      a = a.slice(0, a.length - 1);
+      a.push('QU');
+    } else {
+      a.push(b);
+    }
+    return a;
+  }, []);
+  
+  if (letters.length > 16) {
+    letters = letters.slice(0, 16);
+    target.value = letters.join('');
+  }
+
+  return letters;
+}
+
+$('input.all').on('keyup', e => {
+
+  const letters = boardLetters(e.target.value.toUpperCase(), e.target);
+
+  for (let i = 0; i < 16; i++) {
+    $(`.letters input:nth-of-type(${i+1})`).val(letters[i] || '');
+  }
+  
+  if (letters.length === 16) {
+    $.get('/api/' + letters.join(''))
+      .then(t => $('.output pre').text(t))
+      .fail(e => $('.output pre').text(e));
+  }
+})</script>
+-->
+</body>
+</html>
